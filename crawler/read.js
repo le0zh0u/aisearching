@@ -108,11 +108,45 @@ exports.entranceList = function (url, callback) {
         var $ = cheerio.load(res.body.toString());
 
         //读取入口列表部分
-        var catalogList = [];
+        var websiteList = [];
         $('.entrances .catalog').each(function () {
             var $catalog = $(this);
-            var $catalog_name = $catalog.find('.catalogname');
+            var $catalog_name = $catalog.find('p.catalogname');
+            var tag_name = $catalog_name.text().trim();
+
+            //top
+            var $top = $catalog.find('div.top');
+            var $top_img = $top.find('img.topicon');
+            var $top_name = $top.find('p.topname');
+            var top_item = {
+                code: $top_img.attr('id'),
+                icon_url: $top_img.attr('src'),
+                name: $top_name.text().trim(),
+                rank: 10,
+                tag_name: tag_name
+            };
+
+            websiteList.push(top_item);
+
+            //sub
+            var default_rank = 5;
+            var count = 0;
+            $catalog.find('div.sub').each(function () {
+                var $sub = $(this);
+                var $sub_img = $sub.find('img.subicon');
+                var $sub_name = $sub.find('p.subname');
+                var sub_item = {
+                    code: $sub_img.attr('id'),
+                    icon_url: $sub_img.attr('data-original'),
+                    name: $sub_name.text().trim(),
+                    rank: (default_rank - count * 0.1),
+                    tag_name: tag_name
+                };
+                websiteList.push(sub_item);
+            });
 
         })
+
+        callback(null, websiteList);
     })
 };
