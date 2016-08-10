@@ -8,6 +8,12 @@ var read = require('../crawler/read');
 //     console.log(tagList);
 // });
 
-read.entranceList('http://lackar.com/aa/',function (err, websiteList) {
-    console.log(websiteList);
+// read.entranceList('http://lackar.com/aa/', function (err, websiteList) {
+//     console.log(websiteList);
+// });
+
+
+read.popularList('http://lackar.com/aa/', function (err, popList) {
+    if (err) console.log(err);
+    console.log(popList);
 });

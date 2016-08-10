@@ -122,6 +122,7 @@ exports.entranceList = function (url, callback) {
                 code: $top_img.attr('id'),
                 icon_url: $top_img.attr('src'),
                 name: $top_name.text().trim(),
+                name_en: $top_img.attr('id'),
                 rank: 10,
                 tag_name: tag_name
             };
@@ -139,14 +140,49 @@ exports.entranceList = function (url, callback) {
                     code: $sub_img.attr('id'),
                     icon_url: $sub_img.attr('data-original'),
                     name: $sub_name.text().trim(),
+                    name_en: $sub_img.attr('id'),
                     rank: (default_rank - count * 0.1),
                     tag_name: tag_name
                 };
                 websiteList.push(sub_item);
+                count++;
             });
 
-        })
+        });
 
         callback(null, websiteList);
     })
+};
+
+//获取常见部分网站列表
+exports.popularList = function (url, callback) {
+    debug('开始获取常用网站');
+
+    request(url, function (err, res) {
+        if (err) callback(err);
+
+        var $ = cheerio.load(res.body.toString());
+        var topItemList = [];
+        var $popular = $('div.popular');
+
+        var $popular_name = $popular.find('p.catalogname');
+
+        var default_rank = 5;
+        var count = 0;
+
+        $popular.find('div.top').each(function () {
+            var $me = $(this);
+            var $img = $me.find('img.pop');
+            var item = {
+                code: $img.attr('id'),
+                name_en: $img.attr('id'),
+                icon_url: $img.attr('src'),
+                rank: default_rank - count * 0.1,
+                tag_name: $popular_name.text().trim()
+            };
+            topItemList.push(item);
+            count++;
+        });
+        return callback(null, topItemList);
+    });
 };
