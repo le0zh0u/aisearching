@@ -98,6 +98,14 @@ exports.tagList = function (url, callback) {
     });
 };
 
+
+//判断当前字符串是否以str结束
+if (typeof String.prototype.endsWith != 'function') {
+    String.prototype.endsWith = function (str){
+        return this.slice(-str.length) == str;
+    };
+}
+
 exports.entranceList = function (url, callback) {
     debug('读取网站入口模块');
 
@@ -136,9 +144,21 @@ exports.entranceList = function (url, callback) {
                 var $sub = $(this);
                 var $sub_img = $sub.find('img.subicon');
                 var $sub_name = $sub.find('p.subname');
+                // if ($sub_img === undefined) {
+                //     console.log($sub_name.text().trim() + 'has no icon.');
+                //     return;
+                // }
+                var src = $sub_img.attr('data-original');
+                if (src === undefined) {
+                    src = $sub_img.attr('src');
+                }
+                src = String(src);
+                if (!src.endsWith('png') && !src.endsWith('jpg')){
+                    console.log($sub_name.text().trim() + '图片不是以png结尾.' + $sub_img.attr('id') + '-' + src);
+                }
                 var sub_item = {
                     code: $sub_img.attr('id'),
-                    icon_url: $sub_img.attr('data-original'),
+                    icon_url: src,
                     name: $sub_name.text().trim(),
                     name_en: $sub_img.attr('id'),
                     rank: (default_rank - count * 0.1),
@@ -173,10 +193,16 @@ exports.popularList = function (url, callback) {
         $popular.find('div.top').each(function () {
             var $me = $(this);
             var $img = $me.find('img.pop');
+            var src = $img.attr('src');
+            src = String(src);
+            if (!src.endsWith('png') && !src.endsWith('jpg')){
+                console.log($img.attr('id') + '图片不是以png结尾.' + $img.attr('id') + '-' + src);
+                return;
+            }
             var item = {
                 code: $img.attr('id'),
                 name_en: $img.attr('id'),
-                icon_url: $img.attr('src'),
+                icon_url: src,
                 rank: default_rank - count * 0.1,
                 tag_name: $popular_name.text().trim()
             };
