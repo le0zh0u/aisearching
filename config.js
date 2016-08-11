@@ -11,6 +11,21 @@ exports.db = mysql.createConnection({
     password: '123456'
 });
 
+exports.sqls = {
+    tables:{
+        SEARCH_URL_INFO: ' `search_url_info` ',
+        TAG_INFO: ' `tag_info` ',
+        URL_TAG_RELATION: ' `url_tag_relation` '
+    },
+    method:{
+        UPDATE:'UPDATE ',
+        INSERT:'INSERT INTO ',
+        DELETE: 'DELETE FROM ',
+        SELECT: 'SELECT ',
+        SELECT_ALL:'SELECT * FROM ',
+    }
+}
+
 exports.searching = {
     url: 'http://lackar.com/aa/',
     icon_dir: '/Users/zhouchunjie/Projects/Le0zh0u/aisearching/crawler/icons/'
