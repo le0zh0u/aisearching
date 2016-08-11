@@ -4,4 +4,4 @@
 
 var settings = require('../config'),
     Db = require('mongodb').Db,
-    Connection = require('mongodb').Connection,
+    Connection = require('mongodb').Connection

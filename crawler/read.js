@@ -23,7 +23,7 @@ exports.tagList = function (url, callback) {
             var description = name;
             switch (value) {
                 case '常用':
-                    code = 'common';
+                    code = 'popular';
                     break;
                 case '知识':
                     code = 'knowledge';

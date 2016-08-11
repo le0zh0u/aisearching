@@ -12,12 +12,13 @@ exports.db = mysql.createConnection({
 });
 
 exports.searching = {
-    url:'http://lackar.com/aa/',
+    url: 'http://lackar.com/aa/',
     icon_dir: '/Users/zhouchunjie/Projects/Le0zh0u/aisearching/crawler/icons/'
 }
 
 exports.qiniu = {
     access_key: 'YlaNsJnMXjKHS7-vb_-5d9lTUxZ6Vsg_lYwyamXG',
-    secret_key:'Lx3SFALL_1E2TqOiGM7DqTdkwwjWrRvMA03iqUXI',
-    bucket: 'ai-search'
+    secret_key: 'Lx3SFALL_1E2TqOiGM7DqTdkwwjWrRvMA03iqUXI',
+    bucket: 'ai-search',
+    link_prefix: 'http://obogm84eu.bkt.clouddn.com/'
 }
