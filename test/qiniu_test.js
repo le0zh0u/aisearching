@@ -3,6 +3,10 @@
  */
 var qiniu = require('qiniu');
 var config = require('../config');
+var uploadUtils = require('../utils/qiniu_utils');
+
+key = '36kr.png';
+/*
 qiniu.conf.ACCESS_KEY = config.qiniu.access_key;
 qiniu.conf.SECRET_KEY = config.qiniu.secret_key;
 //构建上传策略函数
@@ -12,7 +16,7 @@ function uptoken(bucket, key) {
 };
 
 //上传到七牛后保存的文件名
-key = '36kr.png';
+
 
 //生成上传 Token
 token = uptoken(config.qiniu.bucket, key);
@@ -37,3 +41,26 @@ function uploadFile(uptoken, key, localFile) {
 
 //调用uploadFile上传
 uploadFile(token, key, filePath);
+*/
+
+
+uploadUtils.uploadFile(config.searching.icon_dir , key, function (err, ret) {
+    if (!err){
+        console.log(ret);
+    }else{
+        console.log(err)
+    }
+})
+
+
+/*//download
+//构建私有空间的链接
+url = config.qiniu.link_prefix +'36kr.png';
+var policy = new qiniu.rs.GetPolicy();
+
+//生成下载链接url
+var downloadUrl = policy.makeRequest(url);
+
+//打印下载的url
+console.log(downloadUrl);*/
+

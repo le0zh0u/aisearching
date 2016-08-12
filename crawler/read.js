@@ -155,6 +155,7 @@ exports.entranceList = function (url, callback) {
                 src = String(src);
                 if (!src.endsWith('png') && !src.endsWith('jpg')){
                     console.log($sub_name.text().trim() + '图片不是以png结尾.' + $sub_img.attr('id') + '-' + src);
+                    return;
                 }
                 var sub_item = {
                     code: $sub_img.attr('id'),
