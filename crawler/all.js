@@ -7,7 +7,7 @@ var db = require('../config').db;
 var async = require('async');
 var debug = require('debug')('ai-search:all');
 var read = require('./read');
-var save = require('./save');
+// var save = require('./save');
 var uploadUtils = require('../utils/qiniu_utils');
 var path = require('path');
 var openLink = require('./open_link');
@@ -25,10 +25,10 @@ async.series([
         });
     },
 
-    //保存标签列表
-    function (done) {
-        save.saveTagList(tagList, done);
-    },
+    // //保存标签列表
+    // function (done) {
+        // save.saveTagList(tagList, done);
+    // },
 
     //获取常用网站列表
     function (done) {
@@ -54,7 +54,7 @@ async.series([
             if (fileName === 'tthemeforestut.png' || fileName === 'googletrends.png' || fileName === 'aol.png') {
                 return;
             }
-            uploadUtils.uploadFile(config.searching.icon_dir, fileName, function (err, ret) {
+            uploadUtils.uploadFile(config.searching.icon_dir, '/' + fileName, function (err, ret) {
                 if (err) console.log(err);
                 item.icon_url = config.qiniu.link_prefix + ret.key;
                 done();

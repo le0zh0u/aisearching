@@ -3,6 +3,7 @@
  */
 
 var mysql = require('mysql');
+var path = require('path')
 exports.db = mysql.createConnection({
     host: '127.0.0.1',
     port: 3306,
@@ -28,7 +29,7 @@ exports.sqls = {
 
 exports.searching = {
     url: 'http://lackar.com/aa/',
-    icon_dir: '/Users/zhouchunjie/Projects/Le0zh0u/aisearching/crawler/icons/'
+    icon_dir: path.resolve(__dirname, './crawler/icons/')
 }
 
 exports.qiniu = {
