@@ -101,7 +101,7 @@ exports.tagList = function (url, callback) {
 
 //判断当前字符串是否以str结束
 if (typeof String.prototype.endsWith != 'function') {
-    String.prototype.endsWith = function (str){
+    String.prototype.endsWith = function (str) {
         return this.slice(-str.length) == str;
     };
 }
@@ -131,38 +131,44 @@ exports.entranceList = function (url, callback) {
                 icon_url: $top_img.attr('src'),
                 name: $top_name.text().trim(),
                 name_en: $top_img.attr('id'),
-                rank: 10,
+                rank: 100,
                 tag_name: tag_name
             };
 
             websiteList.push(top_item);
 
             //sub
-            var default_rank = 5;
+            var default_rank = 50;
             var count = 0;
             $catalog.find('div.sub').each(function () {
                 var $sub = $(this);
                 var $sub_img = $sub.find('img.subicon');
                 var $sub_name = $sub.find('p.subname');
-                // if ($sub_img === undefined) {
-                //     console.log($sub_name.text().trim() + 'has no icon.');
-                //     return;
-                // }
+                var subName = $sub_name.text().trim();
+
+                if (subName ==='') {
+                    $sub_name = $sub.find('p.subname2');
+                    subName = $sub_name.text().trim();
+                }
                 var src = $sub_img.attr('data-original');
                 if (src === undefined) {
                     src = $sub_img.attr('src');
                 }
                 src = String(src);
-                if (!src.endsWith('png') && !src.endsWith('jpg')){
+                if (!src.endsWith('png') && !src.endsWith('jpg')) {
                     console.log($sub_name.text().trim() + '图片不是以png结尾.' + $sub_img.attr('id') + '-' + src);
                     return;
+                }
+                var rank = (default_rank - count);
+                if (rank < 0 ){
+                    rank = 0;
                 }
                 var sub_item = {
                     code: $sub_img.attr('id'),
                     icon_url: src,
-                    name: $sub_name.text().trim(),
+                    name: subName,
                     name_en: $sub_img.attr('id'),
-                    rank: (default_rank - count * 0.1),
+                    rank: rank,
                     tag_name: tag_name
                 };
                 websiteList.push(sub_item);
@@ -188,7 +194,7 @@ exports.popularList = function (url, callback) {
 
         var $popular_name = $popular.find('p.catalogname');
 
-        var default_rank = 5;
+        var default_rank = 50;
         var count = 0;
 
         $popular.find('div.top').each(function () {
@@ -196,15 +202,19 @@ exports.popularList = function (url, callback) {
             var $img = $me.find('img.pop');
             var src = $img.attr('src');
             src = String(src);
-            if (!src.endsWith('png') && !src.endsWith('jpg')){
+            if (!src.endsWith('png') && !src.endsWith('jpg')) {
                 console.log($img.attr('id') + '图片不是以png结尾.' + $img.attr('id') + '-' + src);
                 return;
+            }
+            var rank = (default_rank - count);
+            if (rank < 0 ){
+                rank = 0;
             }
             var item = {
                 code: $img.attr('id'),
                 name_en: $img.attr('id'),
                 icon_url: src,
-                rank: default_rank - count * 0.1,
+                rank: rank,
                 tag_name: $popular_name.text().trim()
             };
             topItemList.push(item);
