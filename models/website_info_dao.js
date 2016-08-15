@@ -58,3 +58,11 @@ exports.saveWebsiteItem = function (website,operator, callback) {
         }
     });
 };
+
+/**
+ * 获取网站全部信息,关联tag
+ * @param callback
+ */
+exports.findWebsiteFullInfo = function(callback){
+    //TODO
+}

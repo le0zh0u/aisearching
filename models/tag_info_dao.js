@@ -44,4 +44,28 @@ exports.selectTagByName = function (tagName, callback) {
 
         return callback(null, data);
     });
+};
+
+/**
+ * 获取所有标签列表
+ * @param callback
+ */
+exports.findAllTagList = function (callback) {
+    debug('获取所有标签列表');
+
+    db.query('SELECT * FROM tag_info ORDER BY id', callback);
+};
+
+/**
+ * 通过标签code获取标签
+ * @param code
+ * @param callback
+ */
+exports.selectTagByCode = function (code, callback) {
+    debug('通过标签code获取标签,code: %s', code);
+    db.query('SELECT * FROM tag_info WHERE code=?', [code], function (err, data) {
+        if (err) return callback(err);
+
+        return callback(null, data);
+    })
 }
