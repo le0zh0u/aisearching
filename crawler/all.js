@@ -7,11 +7,14 @@ var db = require('../config').db;
 var async = require('async');
 var debug = require('debug')('ai-search:all');
 var read = require('./read');
-var save = require('./save');
+var website_info_dao = require('../models/website_info_dao');
+var tag_info_dao = require('../models/tag_info_dao');
+var website_tag_relation_dao = require('../models/website_tag_relation_dao');
 var uploadUtils = require('../utils/qiniu_utils');
 var path = require('path');
 var openLink = require('./open_link');
 
+SAVED_BY_CRAWLER = 'crawler';
 
 var tagList = [];
 var websiteList = [];
@@ -28,7 +31,7 @@ async.series([
 
     // //保存标签列表
     function (done) {
-        save.saveTagList(tagList, done);
+        tag_info_dao.saveTagList(tagList, SAVED_BY_CRAWLER, done);
     },
 
     //获取常用网站列表
@@ -37,7 +40,6 @@ async.series([
             websiteList = websiteList.concat(list);
             done();
         });
-
     },
 
     //获取普通网站列表
@@ -111,7 +113,7 @@ async.series([
                 website.search_url = link["search"];
                 website.home_url = link["search"];
             }
-            save.saveWebsiteItem(website, next);
+            website_info_dao.saveWebsiteItem(website, SAVED_BY_CRAWLER, next);
         }, done);
     },
 
@@ -119,16 +121,16 @@ async.series([
     function (done) {
         async.eachSeries(websiteList, function (website, next) {
             var tagName = website.tag_name;
-            save.selectTagByName(tagName, function (err, data) {
+            tag_info_dao.selectTagByName(tagName, function (err, data) {
                 if (err) return next(err);
 
                 if (data) {
-                    save.saveWebSiteTagRelationItem(website.code, data[0].code, website.rank, next);
+                    website_tag_relation_dao.saveWebSiteTagRelationItem(website.code, data[0].code, website.rank, next);
                 } else {
                     console.log('未找到tag,tagName:%s', website.tag_name);
                 }
             });
-        },done);
+        }, done);
 
     }
 
