@@ -13,7 +13,7 @@ SAVED_BY_CRAWLER = 'crawler';
  * @param list
  * @param callback
  */
-exports.saveWebsiteList = function (list,operator, callback) {
+exports.saveWebsiteList = function (list, operator, callback) {
     debug('保存网站到数据库中: %d', list.length);
 
     async.eachSeries(list, function (website, next) {
@@ -32,7 +32,7 @@ exports.saveWebsiteList = function (list,operator, callback) {
     }, callback);
 };
 
-exports.saveWebsiteItem = function (website,operator, callback) {
+exports.saveWebsiteItem = function (website, operator, callback) {
     debug('保存单个网站到数据库中: %s', website.code);
 
     db.query('SELECT * FROM `website_info` WHERE `code`=? LIMIT 1', [website.code], function (err, data) {
@@ -63,6 +63,9 @@ exports.saveWebsiteItem = function (website,operator, callback) {
  * 获取网站全部信息,关联tag
  * @param callback
  */
-exports.findWebsiteFullInfo = function(callback){
-    //TODO
-}
+exports.findWebsiteFullInfo = function (callback) {
+    var sql = 'SELECT * FROM website_info wi LEFT JOIN website_tag_relation wtr ON wi.code = wtr.website_code LEFT JOIN tag_info ti ON wtr.tag_code = ti.code ORDER BY ti.id ASC, wtr.rank DESC';
+
+    db.query(sql, callback);
+};
+
