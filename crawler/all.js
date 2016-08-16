@@ -68,19 +68,19 @@ async.series([
      },*/
 
     //修改home_url和search_url
-    function (done) {
+    /*function (done) {
         async.each(websiteList, function (item, done) {
             var websiteUrl = openLink.getWebsiteUrl(item.code);
             if (websiteUrl === undefined) {
                 console.log(item.code + " can't find open link.");
                 return;
             }
-            item.home_url = websiteUrl.home;
-            item.search_url = websiteUrl.search;
+            item.home_url = websiteUrl["home"];
+            item.search_url = websiteUrl["search"];
         });
 
         done();
-    },
+    },*/
 
     //重新构建website
     function (done) {
@@ -111,7 +111,7 @@ async.series([
                 console.log('openLink不存在,Code为%s', website.code);
             } else {
                 website.search_url = link["search"];
-                website.home_url = link["search"];
+                website.home_url = link["home"];
             }
             website_info_dao.saveWebsiteItem(website, SAVED_BY_CRAWLER, next);
         }, done);

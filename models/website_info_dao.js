@@ -64,7 +64,7 @@ exports.saveWebsiteItem = function (website, operator, callback) {
  * @param callback
  */
 exports.findWebsiteFullInfo = function (callback) {
-    var sql = 'SELECT * FROM website_info wi LEFT JOIN website_tag_relation wtr ON wi.code = wtr.website_code LEFT JOIN tag_info ti ON wtr.tag_code = ti.code ORDER BY ti.id ASC, wtr.rank DESC';
+    var sql = 'SELECT wi.name as name, wi.icon_url as icon_url, wi.home_url as home_url, wi.search_url as search_url, wi.code as website_code, wi.name_en as name_en, ti.name as tag_name, ti.code as tag_code, wtr.rank as rank FROM website_info wi LEFT JOIN website_tag_relation wtr ON wi.code = wtr.website_code LEFT JOIN tag_info ti ON wtr.tag_code = ti.code ORDER BY ti.id ASC, wtr.rank DESC';
 
     db.query(sql, callback);
 };
