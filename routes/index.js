@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
 
         res.locals.websiteList = data;
         res.locals.title = '网站列表';
-        console.log(data[0]);
         res.render('index');
     });
     // res.render('index', { title: 'Express' });
