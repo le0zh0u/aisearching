@@ -4,13 +4,14 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    webiste_dao.findWebsiteFullInfo(function (err, data) {
+    /*webiste_dao.findWebsiteFullInfo(function (err, data) {
         if (err) return next(err);
 
         res.locals.websiteList = data;
         res.locals.title = '网站列表';
         res.render('index');
-    });
+    });*/
+    res.end('Hello World!');
     // res.render('index', { title: 'Express' });
 });
 
