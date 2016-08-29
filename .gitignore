@@ -87,4 +87,5 @@ fabric.properties
 data/*
 
 crawler/icons
-/config.js
+config.js
+public/dist/
