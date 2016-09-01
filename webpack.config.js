@@ -21,7 +21,30 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015']
                 }
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            },
+            {
+                test: /\.scss$/,
+                loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
+            },
+            {
+                test: /\.(png|jpg|gif|woff|woff2|eot|ttf|svg)$/,
+                loader: 'url-loader?limit=10000&name=build/[name].[ext]'
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+            {
+                test: /\.(mp4|ogg|svg)$/,
+                loader: 'file-loader'
             }
         ]
-    }
+    },
+    resolve: {
+        extensions: ['', '.js', '.json', '.scss']
+    },
 };

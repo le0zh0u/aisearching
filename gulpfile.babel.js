@@ -26,7 +26,7 @@ let fitAllPublicJsPath = 'public/src/**/*.js';
         .pipe(gulp.dest('public/dist'));
 });*/
 
-gulp.task('webpack:build', (callback) => {
+gulp.task('build', (callback) => {
     //modify some webpack config options
     var myConfig = Object.create(webpackConfig);
     myConfig.plugins = myConfig.plugins.concat(
