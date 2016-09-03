@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
         res.locals.title = '网站列表';
         res.render('index');
     });*/
-    res.end('Hello World!');
+    res.end('Hello, World!');
     // res.render('index', { title: 'Express' });
 });
 
